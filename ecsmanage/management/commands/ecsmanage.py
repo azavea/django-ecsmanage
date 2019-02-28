@@ -72,7 +72,7 @@ class Command(BaseCommand):
             raise CommandError(
                 f'Environment "{self.env}" is not a recognized environment in '
                 'ECSMANAGE_ENVIRONMENTS (environments include: '
-                f'{ECSMANAGE_ENVIRONMENTS.keys()})'
+                f'{settings.ECSMANAGE_ENVIRONMENTS.keys()})'
             )
         
         config = {
