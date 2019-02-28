@@ -1,0 +1,26 @@
+language: python
+cache: pip
+
+python:
+  - "3.6"
+  - "3.7"
+
+before_install:
+  # Work around Travis environment. Taken from:
+  # https://github.com/azavea/django-amazon-ses/blob/57ed8619435194742308c6f15cbf9c91b231b88a/.travis.yml#L19
+  - sudo rm /etc/boto.cfg
+
+install: ./scripts/update
+
+script: ./scripts/test
+
+deploy:
+  provider: pypi
+  user: azavea
+  password:
+    secure: fG1z1XACymeQVTJRsUUqqQ7NXYrN//82LIRuCJknbwsFIMGBPyuiQyOkGul/BJ8N4lPWFltTOwRKbF9YhJVY3OOfs6/BXc6A4W49pejr53m1ECc8JJNJ3AL9cChBK2rjjr/NOzvAeZdBGjZSmd37Z486PsJiA1FJ+/sTQq24SZ2CxwUYnEtgnzKDB7F2B3Iyy98SfIOnIiLGAHj/vNjl0wpj1xFfqZmIcujj7HBuAHxyEajDfCk8z38ukZht5tUbl1sY4dU5YfFvsmIG73DaEooJ6wGxQUaw5b7+1NZRL/ic2IXnVoNi0uFrvFKkUYnII3aniSIr7UDwLUfLAb8vgHW+UYcv/gCjNH76+Jr5U2hlLJ9ZDj4eB+mcTak3B6ttHlWXPlDsTX3cMwxaqTp/cKV4VKaSVloFcc9714e2iMrLTpTP6qcQ4OmkDxH223qyoWg2TrE1CF3muJ2sxnsVqiSIWB45v3n1dtvhPZ9zW+FDggsk1N0CUdPV351AdxZHJyJl9lEdgRqBlr/dhgGf412RGDieNY3USw2UPR4ZnVWNBbsQq7ScU0MrVb7H/Y73sULH1Yh4WY8kt5cM1FoxVMS/i41/jh7Ttm0HCY5p/POk5v7R8ROLe6J0gCFyyiIsvV6XODf+fAgkCOTIC1/hzHEH5HdsGGkBV5vyTYzNhO0=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: "3.7"
+    repo: azavea/django-ecsmanage

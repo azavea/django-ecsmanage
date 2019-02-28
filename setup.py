@@ -24,7 +24,7 @@ setup(
     url='https://github.com/azavea/django-ecsmanage/',
     author='Azavea',
     author_email='yourname@example.com',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+    python_requires='>=3.5',
     install_requires=[
         'Django >=1.11, <=2.1',
         'boto3 >=1.9.0'
@@ -37,8 +37,6 @@ setup(
         'License :: OSI Approved :: Apache License 2.0',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
