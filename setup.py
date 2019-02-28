@@ -28,7 +28,7 @@ setup(
     install_requires=[
         'Django >=1.11, <=2.1',
         'boto3 >=1.9.0'
-    ]
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

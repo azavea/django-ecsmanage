@@ -11,7 +11,7 @@ class Command(BaseCommand):
             '-e', '--env',
             type=str,
             default='default',
-            help="Environment to run the task in, as defined in ECS_ENVIRONMENTS."
+            help="Environment to run the task in, as defined in ECSMANAGE_ENVIRONMENTS."
         )
 
         parser.add_argument(
@@ -35,8 +35,10 @@ class Command(BaseCommand):
         self.ec2_client = boto3.client('ec2')
 
         task_def_arn = self.get_task_def(config['TASK_DEFINITION_NAME'])
-        security_group_id = self.get_security_group(config['SECURITY_GROUP_NAME'])
-        subnet_id = self.get_subnet(config['SUBNET_NAME'])
+        security_group_id = self.get_security_group(
+            config['SECURITY_GROUP_TAGS']
+        )
+        subnet_id = self.get_subnet(config['SUBNET_TAGS'])
 
         task_id = self.run_task(config,
                                 task_def_arn,
@@ -60,29 +62,29 @@ class Command(BaseCommand):
         Parse configuration settings for the app, checking to make sure that
         they're valid.
         """
-        if getattr(settings, 'ECS_ENVIRONMENTS') is None:
+        if getattr(settings, 'ECSMANAGE_ENVIRONMENTS') is None:
             raise CommandError(
-                'ECS_ENVIRONMENTS was not found in the Django settings.'
+                'ECSMANAGE_ENVIRONMENTS was not found in the Django settings.'
             )
 
-        ecs_configs = settings.ECS_ENVIRONMENTS.get(self.env, None)
+        ecs_configs = settings.ECSMANAGE_ENVIRONMENTS.get(self.env, None)
         if ecs_configs is None:
             raise CommandError(
                 f'Environment "{self.env}" is not a recognized environment in '
-                'ECS_ENVIRONMENTS (environments include: '
-                f'{ECS_ENVIRONMENTS.keys()})'
+                'ECSMANAGE_ENVIRONMENTS (environments include: '
+                f'{ECSMANAGE_ENVIRONMENTS.keys()})'
             )
         
         config = {
             'TASK_DEFINITION_NAME': '',
             'CLUSTER_NAME': '',
+            'SECURITY_GROUP_TAGS': '',
+            'SUBNET_TAGS': '',
             'LAUNCH_TYPE': 'FARGATE',
-            'SECURITY_GROUP_NAME': '',
-            'SUBNET_NAME': '',
             'AWS_REGION': 'us-east-1',
         }
 
-        for config_name, config_default in config.keys():
+        for config_name, config_default in config.items():
             if ecs_configs.get(config_name) is None:
                 if config_default == '':
                     raise CommandError(
@@ -130,38 +132,34 @@ class Command(BaseCommand):
 
         return self.parse_response(task_def_response, 'taskDefinitionArns', 0)
 
-    def get_security_group(self, security_group_name):
+    def get_security_group(self, security_group_tags):
         """
         Get the ID of the security group to use for the app CLI.
         """
-        filters = [
-            {
-                'Name': 'tag:Name',
-                'Values': [security_group_name]
-            },
-        ]
+        filters = []
+        for tagname, tagvalue in security_group_tags.items():
+            filters.append({
+                'Name': f'tag:{tagname}',
+                'Values': [tagvalue]
+            })
 
-        sg_response = self.ec2_client.describe_security_groups(
-            Filters=filters,
-        )
+        sg_response = self.ec2_client.describe_security_groups(Filters=filters)
 
         security_group = self.parse_response(sg_response, 'SecurityGroups', 0)
         return security_group['GroupId']
 
-    def get_subnet(self, subnet_name):
+    def get_subnet(self, subnet_tags):
         """
         Get a subnet ID to use for the app CLI.
         """
-        filters = [
-            {
-                'Name': 'tag:Name',
-                'Values': [subnet_name]
-            },
-        ]
+        filters = []
+        for tagname, tagvalue in subnet_tags.items():
+            filters.append({
+                'Name': f'tag:{tagname}',
+                'Values': [tagvalue]
+            })
 
-        subnet_response = self.ec2_client.describe_subnets(
-            Filters=filters,
-        )
+        subnet_response = self.ec2_client.describe_subnets(Filters=filters)
 
         subnet = self.parse_response(subnet_response, 'Subnets', 0)
         return subnet['SubnetId']
