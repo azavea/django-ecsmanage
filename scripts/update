@@ -9,7 +9,7 @@ fi
 function usage() {
     echo -n \
          "Usage: $(basename "$0")
-         
+
 Install the package for testing.
 "
 }
@@ -20,7 +20,7 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
     else
         if ! [ -x "$(command -v python3)" ]; then
             echo "Error: python3 is not installed."
-            exit 1j
+            exit 1
         elif ! [ -x "$(command -v pip3)" ]; then
             echo "Error: pip3 is not installed."
             exit 1

@@ -1,26 +1,36 @@
 language: python
 cache: pip
-
-python:
-  - "3.6"
-  - "3.7"
-
+env:
+  global:
+  - PYTHONPATH="./tests/"
+  - DJANGO_SETTINGS_MODULE="settings_test"
+matrix:
+  include:
+  - python: 3.6
+  - python: 3.7
+    dist: xenial
+    sudo: true
 before_install:
-  # Work around Travis environment. Taken from:
-  # https://github.com/azavea/django-amazon-ses/blob/57ed8619435194742308c6f15cbf9c91b231b88a/.travis.yml#L19
-  - sudo rm /etc/boto.cfg
-
-install: ./scripts/update
-
-script: ./scripts/test
-
+- sudo rm /etc/boto.cfg
+install: pip install .[tests]
+script: django-admin test --noinput
 deploy:
-  provider: pypi
-  user: azavea
-  password:
-    secure: fG1z1XACymeQVTJRsUUqqQ7NXYrN//82LIRuCJknbwsFIMGBPyuiQyOkGul/BJ8N4lPWFltTOwRKbF9YhJVY3OOfs6/BXc6A4W49pejr53m1ECc8JJNJ3AL9cChBK2rjjr/NOzvAeZdBGjZSmd37Z486PsJiA1FJ+/sTQq24SZ2CxwUYnEtgnzKDB7F2B3Iyy98SfIOnIiLGAHj/vNjl0wpj1xFfqZmIcujj7HBuAHxyEajDfCk8z38ukZht5tUbl1sY4dU5YfFvsmIG73DaEooJ6wGxQUaw5b7+1NZRL/ic2IXnVoNi0uFrvFKkUYnII3aniSIr7UDwLUfLAb8vgHW+UYcv/gCjNH76+Jr5U2hlLJ9ZDj4eB+mcTak3B6ttHlWXPlDsTX3cMwxaqTp/cKV4VKaSVloFcc9714e2iMrLTpTP6qcQ4OmkDxH223qyoWg2TrE1CF3muJ2sxnsVqiSIWB45v3n1dtvhPZ9zW+FDggsk1N0CUdPV351AdxZHJyJl9lEdgRqBlr/dhgGf412RGDieNY3USw2UPR4ZnVWNBbsQq7ScU0MrVb7H/Y73sULH1Yh4WY8kt5cM1FoxVMS/i41/jh7Ttm0HCY5p/POk5v7R8ROLe6J0gCFyyiIsvV6XODf+fAgkCOTIC1/hzHEH5HdsGGkBV5vyTYzNhO0=
-  distributions: sdist bdist_wheel
-  on:
-    tags: true
-    python: "3.7"
-    repo: azavea/django-ecsmanage
+  - provider: pypi
+    user: django-ecsmanage
+    skip_existing: true
+    server: https://test.pypi.org/legacy/
+    password:
+      secure: 0x32eNc+iKoYxM+nvMEEQJIoPHq3ehNqVUyKMT6crntYBBC8xgD2NHwsF0HCtfgm/NitWFlZLwtPhpb8dxTW//hh5gafkLt4/MALHFYBeRYm0AihCfTkjiuC/FCkpQ9K7X9dVO5qQN5gi5PQvkFW13NrKWOUCMTr2/jE8mLaRS3exCKUUamsd/S6BxgXY7LHm50ueDFDTYSkZrqKwIHnwwpMLcLvZZxcRJXZxpK567e8KTpcBelG+/ecY+Cn/+L0JJ29p6CGWCuW+vaIeYaeHAU6XZZ/cqNuycYlFTX+CpKSlajQgFQTMC1O1L6OVX73gSpZ2jUSd5dSimDmxgttsoo+kCxPA/hY9cUfXUpS1c52xVv9ZXZgweIV0g/EXcKLe1SIal8wy6fTE5DFzyZsZutE6ipksZjgrsFM26IHPflsf/caM/n3nDqoeXW5FtA8t4wpsemYWRFnYhCbWUWpiqAweKzzK/+3AJKEf55d4Zk7TokEjg5bZdBLroI0zy4MM6clxzujZNpn8FgTtlKhN9sDtHU5AvSe0+BUJRHJQVVSbc0wk5L+03dYarPlhShIWISSjoLFgDJhJPCZLgWD1OTetv0IekxU38AJnyqUi5XvUUbtOOiyNyU6xCFVp2XMQdRwMv41hYvEFbY4Su1B3AF2vSJCvK1HQehvzAMt4JE=
+    on:
+      distributions: sdist bdist_wheel
+      repo: azavea/django-ecsmanage
+      branch: develop
+  - provider: pypi
+    user: django-ecsmanage
+    skip_existing: true
+    password:
+      secure: 0x32eNc+iKoYxM+nvMEEQJIoPHq3ehNqVUyKMT6crntYBBC8xgD2NHwsF0HCtfgm/NitWFlZLwtPhpb8dxTW//hh5gafkLt4/MALHFYBeRYm0AihCfTkjiuC/FCkpQ9K7X9dVO5qQN5gi5PQvkFW13NrKWOUCMTr2/jE8mLaRS3exCKUUamsd/S6BxgXY7LHm50ueDFDTYSkZrqKwIHnwwpMLcLvZZxcRJXZxpK567e8KTpcBelG+/ecY+Cn/+L0JJ29p6CGWCuW+vaIeYaeHAU6XZZ/cqNuycYlFTX+CpKSlajQgFQTMC1O1L6OVX73gSpZ2jUSd5dSimDmxgttsoo+kCxPA/hY9cUfXUpS1c52xVv9ZXZgweIV0g/EXcKLe1SIal8wy6fTE5DFzyZsZutE6ipksZjgrsFM26IHPflsf/caM/n3nDqoeXW5FtA8t4wpsemYWRFnYhCbWUWpiqAweKzzK/+3AJKEf55d4Zk7TokEjg5bZdBLroI0zy4MM6clxzujZNpn8FgTtlKhN9sDtHU5AvSe0+BUJRHJQVVSbc0wk5L+03dYarPlhShIWISSjoLFgDJhJPCZLgWD1OTetv0IekxU38AJnyqUi5XvUUbtOOiyNyU6xCFVp2XMQdRwMv41hYvEFbY4Su1B3AF2vSJCvK1HQehvzAMt4JE=
+    on:
+      distributions: sdist bdist_wheel
+      repo: azavea/django-ecsmanage
+      branch: master

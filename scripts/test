@@ -9,7 +9,7 @@ fi
 function usage() {
     echo -n \
          "Usage: $(basename "$0") [OPTIONS]
-         
+
 Run tests for the django-ecsmanage app.
 
 Options:
@@ -23,14 +23,14 @@ function run_linters() {
     # Lint Bash scripts.
     if command -v shellcheck > /dev/null; then
         shellcheck scripts/*
-    fi 
+    fi
 
     # Lint Python scripts.
     ./.venv/bin/flake8 --exclude ./*.pyc,./.venv
 }
 
 function run_tests() {
-    PYTHONPATH="./tests/" DJANGO_SETTINGS_MODULE='settings_test' \
+    PYTHONPATH="./tests/" DJANGO_SETTINGS_MODULE="settings_test" \
         ./.venv/bin/django-admin test --noinput
 }
 
