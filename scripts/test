@@ -17,6 +17,7 @@ Options:
   --lint     Run shell and Python linters.
   --app      Run app tests.
 "
+}
 
 function run_linters() {
     # Lint Bash scripts.
@@ -25,14 +26,12 @@ function run_linters() {
     fi 
 
     # Lint Python scripts.
-        # Lint Python scripts.
-    docker-compose run --rm --no-deps \
-                            --entrypoint flake8 app \
-                            --exclude *.pyc
+    ./.venv/bin/flake8 --exclude ./*.pyc,./.venv
 }
 
 function run_tests() {
-    docker-compose run --rm --entrypoint python app manage.py test --noinput
+    PYTHONPATH="./tests/" DJANGO_SETTINGS_MODULE='settings_test' \
+        ./.venv/bin/django-admin test --noinput
 }
 
 if [ "${BASH_SOURCE[0]}" = "${0}" ]; then

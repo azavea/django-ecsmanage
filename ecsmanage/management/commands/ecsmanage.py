@@ -11,7 +11,10 @@ class Command(BaseCommand):
             '-e', '--env',
             type=str,
             default='default',
-            help="Environment to run the task in, as defined in ECSMANAGE_ENVIRONMENTS."
+            help=(
+                'Environment to run the task in, as defined in'
+                'ECSMANAGE_ENVIRONMENTS.'
+            )
         )
 
         parser.add_argument(
@@ -74,7 +77,7 @@ class Command(BaseCommand):
                 'ECSMANAGE_ENVIRONMENTS (environments include: '
                 f'{settings.ECSMANAGE_ENVIRONMENTS.keys()})'
             )
-        
+
         config = {
             'TASK_DEFINITION_NAME': '',
             'CLUSTER_NAME': '',
@@ -164,7 +167,12 @@ class Command(BaseCommand):
         subnet = self.parse_response(subnet_response, 'Subnets', 0)
         return subnet['SubnetId']
 
-    def run_task(self, config, task_def_arn, security_group_id, subnet_id, cmd):
+    def run_task(self,
+                 config,
+                 task_def_arn,
+                 security_group_id,
+                 subnet_id,
+                 cmd):
         """
         Run a task for a given task definition ARN using the given security
         group and subnets, and return the task ID.

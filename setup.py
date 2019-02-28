@@ -5,8 +5,8 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
 description = (
-    'Run any Django management command on an AWS Elastic Container Service (ECS)'
-    'cluster.'
+    'Run any Django management command on an AWS Elastic Container Service'
+    '(ECS) cluster.'
 )
 
 # allow setup.py to be run from any path
@@ -29,6 +29,7 @@ setup(
         'Django >=1.11, <=2.1',
         'boto3 >=1.9.0'
     ],
+    extras_require={'tests': ['moto >= 1.3.3', 'flake8 >= 3.7.7']},
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
