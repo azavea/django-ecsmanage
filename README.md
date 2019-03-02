@@ -4,8 +4,7 @@ A Django app that provides a management command allowing you to run any
 other management command on an AWS Elastic Container Service
 (ECS) cluster.
 
-Useful for running migrations and other one-off commands in staging and
-production environments. With `django-ecsmanage`, you can easily run migrations
+With `django-ecsmanage`, you can easily run migrations and other one-off tasks
 on a remote cluster from the command line:
 
 ```
@@ -22,10 +21,10 @@ $ django-admin ecsmanage migrate
 
 ## Installation
 
-Install from GitHub using pip:
+Install from PyPi using pip:
 
 ```
-$ pip install git+https://github.com/azavea/django-ecsmanage.git
+$ pip install django-ecsmanage
 ```
 
 Update `INSTALLED_APPS` in your Django settings to install the app:
@@ -43,7 +42,7 @@ Settings for the management command are kept in a single configuration
 dictionary in your Django settings named `ECSMANAGE_ENVIRONMENTS`. Each entry in
 `ECSMANAGE_ENVIRONMENTS` should be a key-value pair corresponding to a
 named environment (like `default` or `production`) and a set of AWS resources
-in that environment. For example:
+associated with that environment. For example:
 
 ```python
 ECSMANAGE_ENVIRONMENTS = {
@@ -66,11 +65,14 @@ ECSMANAGE_ENVIRONMENTS = {
 }
 ```
 
+This configuration defines a single environment, named `default`, with
+associated AWS ECS resources.
+
 ### Environments
 
 The key name for an environment can be any string. You can use this name
 with the `--env` flag when running the command to run a command on a
-different environment. Take this `ECSMANAGE_ENVIRONMENTS` variable
+different environment. Take this `ECSMANAGE_ENVIRONMENTS` configuration
 as an example:
 
 ```python
@@ -98,6 +100,7 @@ ECSMANAGE_ENVIRONMENTS = {
 }
 ```
 
+This configuration defines two environments, `default` and `production`.
 Using the above settings, you could run production migrations with the
 following command:
 
@@ -110,7 +113,7 @@ environment named `default`.
 
 ### AWS Resources
 
-The following keys in an environment help the management command locate
+The following environment configuration keys help the management command locate
 the appropriate AWS resources for your cluster:
 
 | key name | description | default |
