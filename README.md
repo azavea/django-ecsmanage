@@ -128,7 +128,7 @@ the appropriate AWS resources for your cluster:
 ## Developing
 
 Local development is managed with Python virtual environments. Make sure that
-you have [Python 3.4+ and pip installed](https://www.python.org/downloads/)
+you have [Python 3.6+ and pip installed](https://www.python.org/downloads/)
 before starting.
 
 Install the development package in a virtual environment:
