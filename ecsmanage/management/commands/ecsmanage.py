@@ -33,9 +33,11 @@ class Command(BaseCommand):
         cmd = options['cmd']
 
         config = self.parse_config()
+        
+        aws_region = config['AWS_REGION']
 
-        self.ecs_client = boto3.client('ecs')
-        self.ec2_client = boto3.client('ec2')
+        self.ecs_client = boto3.client('ecs', region_name=aws_region)
+        self.ec2_client = boto3.client('ec2', region_name=aws_region)
 
         task_def_arn = self.get_task_def(config['TASK_DEFINITION_NAME'])
         security_group_id = self.get_security_group(
@@ -50,7 +52,6 @@ class Command(BaseCommand):
                                 cmd)
 
         cluster_name = config['CLUSTER_NAME']
-        aws_region = config['AWS_REGION']
 
         url = (
             f'https://console.aws.amazon.com/ecs/home?region={aws_region}#'
@@ -125,7 +126,7 @@ class Command(BaseCommand):
 
     def get_task_def(self, task_def_name):
         """
-        Get the ARN of the latest ECS task definition for the app CLI.
+        Get the ARN of the latest ECS task definition with the name task_def_name.
         """
         task_def_response = self.ecs_client.list_task_definitions(
             familyPrefix=task_def_name,
@@ -137,7 +138,8 @@ class Command(BaseCommand):
 
     def get_security_group(self, security_group_tags):
         """
-        Get the ID of the security group to use for the app CLI.
+        Get the ID of the first security group with tags corresponding to
+        security_group_tags.
         """
         filters = []
         for tagname, tagvalue in security_group_tags.items():
@@ -153,7 +155,7 @@ class Command(BaseCommand):
 
     def get_subnet(self, subnet_tags):
         """
-        Get a subnet ID to use for the app CLI.
+        Get the ID of the first subnet with tags corresponding to subnet_tags.
         """
         filters = []
         for tagname, tagvalue in subnet_tags.items():
