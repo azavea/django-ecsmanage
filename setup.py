@@ -24,7 +24,7 @@ setup(
     url='https://github.com/azavea/django-ecsmanage/',
     author='Azavea',
     author_email='yourname@example.com',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     install_requires=[
         'Django >=1.11, <=2.1',
         'boto3 >=1.9.0'
