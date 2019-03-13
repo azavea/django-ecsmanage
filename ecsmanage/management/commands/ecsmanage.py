@@ -33,7 +33,7 @@ class Command(BaseCommand):
         cmd = options['cmd']
 
         config = self.parse_config()
-        
+
         aws_region = config['AWS_REGION']
 
         self.ecs_client = boto3.client('ecs', region_name=aws_region)
@@ -126,7 +126,8 @@ class Command(BaseCommand):
 
     def get_task_def(self, task_def_name):
         """
-        Get the ARN of the latest ECS task definition with the name task_def_name.
+        Get the ARN of the latest ECS task definition with the name
+        task_def_name.
         """
         task_def_response = self.ecs_client.list_task_definitions(
             familyPrefix=task_def_name,
