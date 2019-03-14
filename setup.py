@@ -14,7 +14,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-ecsmanage',
-    version='0.0.0',
+    use_scm_version=True,
     packages=find_packages(),
     include_package_data=True,
     license='Apache License 2.0',
@@ -30,6 +30,7 @@ setup(
         'boto3 >=1.9.0'
     ],
     extras_require={'tests': ['moto >= 1.3.3', 'flake8 >= 3.7.7']},
+    setup_requires=['setuptools_scm==3.*'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
