@@ -196,14 +196,29 @@ class Command(BaseCommand):
             }
         }
 
-        task_response = self.ecs_client.run_task(
-            cluster=config['CLUSTER_NAME'],
+        task_def = self.ecs_client.describe_task_definition(
             taskDefinition=task_def_arn,
-            overrides=overrides,
-            networkConfiguration=network_configuration,
-            count=1,
-            launchType=config['LAUNCH_TYPE']
         )
+
+        # Only the awsvpc network mode supports the networkConfiguration
+        # input value.
+        if task_def['networkMode'] == 'awsvpc':
+            task_response = self.ecs_client.run_task(
+                cluster=config['CLUSTER_NAME'],
+                taskDefinition=task_def_arn,
+                overrides=overrides,
+                networkConfiguration=network_configuration,
+                count=1,
+                launchType=config['LAUNCH_TYPE']
+            )
+        else
+            task_response = self.ecs_client.run_task(
+                cluster=config['CLUSTER_NAME'],
+                taskDefinition=task_def_arn,
+                overrides=overrides,
+                count=1,
+                launchType=config['LAUNCH_TYPE']
+            )
 
         task = self.parse_response(task_response, 'tasks', 0)
 
