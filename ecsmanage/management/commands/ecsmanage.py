@@ -189,13 +189,6 @@ class Command(BaseCommand):
             ]
         }
 
-        network_configuration = {
-            'awsvpcConfiguration': {
-                'subnets': [subnet_id],
-                'securityGroups': [security_group_id]
-            }
-        }
-
         task_def = self.ecs_client.describe_task_definition(
             taskDefinition=task_def_arn,
         )
@@ -203,6 +196,13 @@ class Command(BaseCommand):
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
         if task_def['networkMode'] == 'awsvpc':
+            network_configuration = {
+                'awsvpcConfiguration': {
+                    'subnets': [subnet_id],
+                    'securityGroups': [security_group_id]
+                }
+            }
+
             task_response = self.ecs_client.run_task(
                 cluster=config['CLUSTER_NAME'],
                 taskDefinition=task_def_arn,
