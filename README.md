@@ -11,7 +11,7 @@ on a remote cluster from the command line:
 $ django-admin ecsmanage migrate
 ```
 
-## Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -116,14 +116,14 @@ environment named `default`.
 The following environment configuration keys help the management command locate
 the appropriate AWS resources for your cluster:
 
-| key name | description | default |
-| -------- |  ----------- | ------- |
-| `TASK_DEFINITION_NAME` | The name of your ECS task definition. The command will automatically retrieve the latest definition. | | 
-| `CLUSTER_NAME` | The name of your ECS cluster. | | 
-| `SECURITY_GROUP_TAGS` | A dictionary of tags to use to identify a security group for your task. | |
-| `SUBNET_TAGS` | A dictionary of tags to use to identify a subnet for your task. | |
-| `LAUNCH_TYPE` | The ECS launch type for your task. | `FARGATE` |
-| `AWS_REGION` | The AWS region to run your task. | `us-east-1` |
+| Key                    | Description                                                                                          | Default     |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- | ----------- |
+| `TASK_DEFINITION_NAME` | The name of your ECS task definition. The command will automatically retrieve the latest definition. |             |
+| `CLUSTER_NAME`         | The name of your ECS cluster.                                                                        |             |
+| `SECURITY_GROUP_TAGS`  | A dictionary of tags to use to identify a security group for your task.                              |             |
+| `SUBNET_TAGS`          | A dictionary of tags to use to identify a subnet for your task.                                      |             |
+| `LAUNCH_TYPE`          | The ECS launch type for your task.                                                                   | `FARGATE`   |
+| `AWS_REGION`           | The AWS region to run your task.                                                                     | `us-east-1` |
 
 ## Developing
 
