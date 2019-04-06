@@ -27,7 +27,7 @@ setup(
     python_requires=">=3.6",
     install_requires=["Django>=1.11, <=2.1", "boto3>=1.9.0"],
     extras_require={"tests": ["moto>=1.3.3",
-                              "flake8>=3.7.7", "black==stable"]},
+                              "flake8>=3.7.7", "black"]},
     setup_requires=["setuptools_scm==3.*"],
     classifiers=[
         "Environment :: Web Environment",
