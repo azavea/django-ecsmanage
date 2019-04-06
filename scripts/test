@@ -27,6 +27,7 @@ function run_linters() {
 
     # Lint Python scripts.
     ./.venv/bin/flake8 --exclude ./*.pyc,./.venv
+    ./.venv/bin/black --check --target-version py36
 }
 
 function run_tests() {

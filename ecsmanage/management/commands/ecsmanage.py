@@ -4,24 +4,25 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
-    help = 'Run a one-off management command on an ECS cluster.'
+    help = "Run a one-off management command on an ECS cluster."
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '-e', '--env',
+            "-e",
+            "--env",
             type=str,
-            default='default',
+            default="default",
             help=(
-                'Environment to run the task in, as defined in'
-                'ECSMANAGE_ENVIRONMENTS.'
-            )
+                "Environment to run the task in, as defined in"
+                "ECSMANAGE_ENVIRONMENTS."
+            ),
         )
 
         parser.add_argument(
-            'cmd',
+            "cmd",
             type=str,
-            nargs='+',
-            help="Command override for the ECS container (e.g. 'migrate')"
+            nargs="+",
+            help="Command override for the ECS container (e.g. 'migrate')",
         )
 
     def handle(self, *args, **options):
@@ -29,36 +30,30 @@ class Command(BaseCommand):
         Run the given command on the latest app CLI task definition and print
         out a URL to view the status.
         """
-        self.env = options['env']
-        cmd = options['cmd']
+        self.env = options["env"]
+        cmd = options["cmd"]
 
         config = self.parse_config()
 
-        aws_region = config['AWS_REGION']
+        aws_region = config["AWS_REGION"]
 
-        self.ecs_client = boto3.client('ecs', region_name=aws_region)
-        self.ec2_client = boto3.client('ec2', region_name=aws_region)
+        self.ecs_client = boto3.client("ecs", region_name=aws_region)
+        self.ec2_client = boto3.client("ec2", region_name=aws_region)
 
-        task_def_arn = self.get_task_def(config['TASK_DEFINITION_NAME'])
-        security_group_id = self.get_security_group(
-            config['SECURITY_GROUP_TAGS']
-        )
-        subnet_id = self.get_subnet(config['SUBNET_TAGS'])
+        task_def_arn = self.get_task_def(config["TASK_DEFINITION_NAME"])
+        security_group_id = self.get_security_group(config["SECURITY_GROUP_TAGS"])
+        subnet_id = self.get_subnet(config["SUBNET_TAGS"])
 
-        task_id = self.run_task(config,
-                                task_def_arn,
-                                security_group_id,
-                                subnet_id,
-                                cmd)
+        task_id = self.run_task(config, task_def_arn, security_group_id, subnet_id, cmd)
 
-        cluster_name = config['CLUSTER_NAME']
+        cluster_name = config["CLUSTER_NAME"]
 
         url = (
-            f'https://console.aws.amazon.com/ecs/home?region={aws_region}#'
-            f'/clusters/{cluster_name}/tasks/{task_id}/details'
+            f"https://console.aws.amazon.com/ecs/home?region={aws_region}#"
+            f"/clusters/{cluster_name}/tasks/{task_id}/details"
         )
 
-        self.stdout.write(self.style.SUCCESS('Task started! View here:\n'))
+        self.stdout.write(self.style.SUCCESS("Task started! View here:\n"))
         self.stdout.write(self.style.SUCCESS(url))
 
     def parse_config(self):
@@ -66,34 +61,34 @@ class Command(BaseCommand):
         Parse configuration settings for the app, checking to make sure that
         they're valid.
         """
-        if getattr(settings, 'ECSMANAGE_ENVIRONMENTS') is None:
+        if getattr(settings, "ECSMANAGE_ENVIRONMENTS") is None:
             raise CommandError(
-                'ECSMANAGE_ENVIRONMENTS was not found in the Django settings.'
+                "ECSMANAGE_ENVIRONMENTS was not found in the Django settings."
             )
 
         ecs_configs = settings.ECSMANAGE_ENVIRONMENTS.get(self.env, None)
         if ecs_configs is None:
             raise CommandError(
                 f'Environment "{self.env}" is not a recognized environment in '
-                'ECSMANAGE_ENVIRONMENTS (environments include: '
-                f'{settings.ECSMANAGE_ENVIRONMENTS.keys()})'
+                "ECSMANAGE_ENVIRONMENTS (environments include: "
+                f"{settings.ECSMANAGE_ENVIRONMENTS.keys()})"
             )
 
         config = {
-            'TASK_DEFINITION_NAME': '',
-            'CLUSTER_NAME': '',
-            'SECURITY_GROUP_TAGS': '',
-            'SUBNET_TAGS': '',
-            'LAUNCH_TYPE': 'FARGATE',
-            'AWS_REGION': 'us-east-1',
+            "TASK_DEFINITION_NAME": "",
+            "CLUSTER_NAME": "",
+            "SECURITY_GROUP_TAGS": "",
+            "SUBNET_TAGS": "",
+            "LAUNCH_TYPE": "FARGATE",
+            "AWS_REGION": "us-east-1",
         }
 
         for config_name, config_default in config.items():
             if ecs_configs.get(config_name) is None:
-                if config_default == '':
+                if config_default == "":
                     raise CommandError(
                         f'Environment "{self.env}" is missing required config '
-                        f'attribute {config_name}'
+                        f"attribute {config_name}"
                     )
                 else:
                     config[config_name] = config_default
@@ -109,17 +104,14 @@ class Command(BaseCommand):
         will get propagated to the end user.
         """
         if not response.get(key):
-            msg = f'Unexpected response from ECS API: {response}'
+            msg = f"Unexpected response from ECS API: {response}"
             raise KeyError(msg)
         else:
             if idx is not None:
                 try:
                     return response[key][0]
                 except (IndexError, TypeError):
-                    msg = (
-                        f"Unexpected value for '{key}' in response: "
-                        f'{response}'
-                    )
+                    msg = f"Unexpected value for '{key}' in response: " f"{response}"
                     raise IndexError(msg)
             else:
                 return response[key]
@@ -130,12 +122,10 @@ class Command(BaseCommand):
         task_def_name.
         """
         task_def_response = self.ecs_client.list_task_definitions(
-            familyPrefix=task_def_name,
-            sort='DESC',
-            maxResults=1
+            familyPrefix=task_def_name, sort="DESC", maxResults=1
         )
 
-        return self.parse_response(task_def_response, 'taskDefinitionArns', 0)
+        return self.parse_response(task_def_response, "taskDefinitionArns", 0)
 
     def get_security_group(self, security_group_tags):
         """
@@ -144,15 +134,12 @@ class Command(BaseCommand):
         """
         filters = []
         for tagname, tagvalue in security_group_tags.items():
-            filters.append({
-                'Name': f'tag:{tagname}',
-                'Values': [tagvalue]
-            })
+            filters.append({"Name": f"tag:{tagname}", "Values": [tagvalue]})
 
         sg_response = self.ec2_client.describe_security_groups(Filters=filters)
 
-        security_group = self.parse_response(sg_response, 'SecurityGroups', 0)
-        return security_group['GroupId']
+        security_group = self.parse_response(sg_response, "SecurityGroups", 0)
+        return security_group["GroupId"]
 
     def get_subnet(self, subnet_tags):
         """
@@ -160,69 +147,52 @@ class Command(BaseCommand):
         """
         filters = []
         for tagname, tagvalue in subnet_tags.items():
-            filters.append({
-                'Name': f'tag:{tagname}',
-                'Values': [tagvalue]
-            })
+            filters.append({"Name": f"tag:{tagname}", "Values": [tagvalue]})
 
         subnet_response = self.ec2_client.describe_subnets(Filters=filters)
 
-        subnet = self.parse_response(subnet_response, 'Subnets', 0)
-        return subnet['SubnetId']
+        subnet = self.parse_response(subnet_response, "Subnets", 0)
+        return subnet["SubnetId"]
 
-    def run_task(self,
-                 config,
-                 task_def_arn,
-                 security_group_id,
-                 subnet_id,
-                 cmd):
+    def run_task(self, config, task_def_arn, security_group_id, subnet_id, cmd):
         """
         Run a task for a given task definition ARN using the given security
         group and subnets, and return the task ID.
         """
-        overrides = {
-            'containerOverrides': [
-                {
-                    'name': 'django',
-                    'command': cmd
-                }
-            ]
-        }
+        overrides = {"containerOverrides": [{"name": "django", "command": cmd}]}
 
-        task_def = self.ecs_client.describe_task_definition(
-            taskDefinition=task_def_arn,
-        )
+        task_def = self.ecs_client.describe_task_definition(taskDefinition=task_def_arn)
 
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
-        if task_def['networkMode'] == 'awsvpc':
+        if task_def["networkMode"] == "awsvpc":
             network_configuration = {
-                'awsvpcConfiguration': {
-                    'subnets': [subnet_id],
-                    'securityGroups': [security_group_id]
+                "awsvpcConfiguration": {
+                    "subnets": [subnet_id],
+                    "securityGroups": [security_group_id],
                 }
             }
 
             task_response = self.ecs_client.run_task(
-                cluster=config['CLUSTER_NAME'],
+                cluster=config["CLUSTER_NAME"],
                 taskDefinition=task_def_arn,
                 overrides=overrides,
                 networkConfiguration=network_configuration,
                 count=1,
-                launchType=config['LAUNCH_TYPE']
+                launchType=config["LAUNCH_TYPE"],
             )
-        else
+        else:
             task_response = self.ecs_client.run_task(
-                cluster=config['CLUSTER_NAME'],
+                cluster=config["CLUSTER_NAME"],
                 taskDefinition=task_def_arn,
                 overrides=overrides,
                 count=1,
-                launchType=config['LAUNCH_TYPE']
+                launchType=config["LAUNCH_TYPE"],
             )
 
-        task = self.parse_response(task_response, 'tasks', 0)
+        task = self.parse_response(task_response, "tasks", 0)
 
         # Parse the ask ARN, since ECS doesn't return the task ID.
         # Task ARNS look like: arn:aws:ecs:<region>:<aws_account_id>:task/<id>
-        task_id = task['taskArn'].split('/')[1]
+        task_id = task["taskArn"].split("/")[1]
         return task_id

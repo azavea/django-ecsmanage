@@ -1,4 +1,4 @@
 """
 Django settings for testing purposes.
 """
-SECRET_KEY = 'testing!'
+SECRET_KEY = "testing!"
