@@ -25,21 +25,22 @@ script: django-admin test --noinput
 
 deploy:
   - provider: pypi
-    user: django-ecsmanage
-    skip_existing: true
+    user: azavea
+    password:
+      secure: I4cXP4rdPdVWZYttI7tAutWfDHMKMaJX1IH9gghfjJgc7ex0S8IFqNvEMB8ujtHoqk6FqVaC+O6zBV4g0rDMgbiOUzZa3UNmmHXofYKR8kCOQ9gD4FN2xZi0R5VOl32v/3ABlaDWFB2FP+0Ggq+j280dxhnniZnRU+0Vnuzb5/XjMYhVLV9Gds+qML8cxL5Dc5h6x+SlxeqNa6cAbquYBtlJvUSeavl7QK/uTNR8yihzuuuIhE52pCzxFbf/zuw0gQqdXw2fCXWPgfOXctl/1oc36A6JsYTWY0Ep3khUiPQFQ4oW99xu4PSpbWJ+7PqlsXL9Tenx6iGTJ2JpvTl/dZRXhgHDuqkYDLsgI/4eCz31GMOmObzs7BQF1jz7XoBGG7ektZ7M1zZPUWGk4ikUkaOYu3k/QymD7IerpRO8ihE/rolwJ0+Rblq8ZtE5KoXFmViBgJrg4Ceef/tsmxqsXt0Ani+m3e6t4lolusdUXW72I5XBh4M9aqJRGH2AXTW3qnDSLSjO1wJ3p7TqDy64h+lD/E0zdYv/HTRhEF9EAtqCcyutgmg6W2payJQ1dIUSJ0DfTbP2V8aVNCFOZWt0bCiyuycuf+UKZJrMdcgD9HMYaAqpKkyN3kIpSQfMGkGDqMDExvSupI6BgvL9f81jONorMnLGN0e6pESA+8ZO/xc=
     server: https://test.pypi.org/legacy/
-    password:
-      secure: 0x32eNc+iKoYxM+nvMEEQJIoPHq3ehNqVUyKMT6crntYBBC8xgD2NHwsF0HCtfgm/NitWFlZLwtPhpb8dxTW//hh5gafkLt4/MALHFYBeRYm0AihCfTkjiuC/FCkpQ9K7X9dVO5qQN5gi5PQvkFW13NrKWOUCMTr2/jE8mLaRS3exCKUUamsd/S6BxgXY7LHm50ueDFDTYSkZrqKwIHnwwpMLcLvZZxcRJXZxpK567e8KTpcBelG+/ecY+Cn/+L0JJ29p6CGWCuW+vaIeYaeHAU6XZZ/cqNuycYlFTX+CpKSlajQgFQTMC1O1L6OVX73gSpZ2jUSd5dSimDmxgttsoo+kCxPA/hY9cUfXUpS1c52xVv9ZXZgweIV0g/EXcKLe1SIal8wy6fTE5DFzyZsZutE6ipksZjgrsFM26IHPflsf/caM/n3nDqoeXW5FtA8t4wpsemYWRFnYhCbWUWpiqAweKzzK/+3AJKEf55d4Zk7TokEjg5bZdBLroI0zy4MM6clxzujZNpn8FgTtlKhN9sDtHU5AvSe0+BUJRHJQVVSbc0wk5L+03dYarPlhShIWISSjoLFgDJhJPCZLgWD1OTetv0IekxU38AJnyqUi5XvUUbtOOiyNyU6xCFVp2XMQdRwMv41hYvEFbY4Su1B3AF2vSJCvK1HQehvzAMt4JE=
+    distributions: sdist bdist_wheel
     on:
-      distributions: sdist bdist_wheel
+      python: "3.7"
       repo: azavea/django-ecsmanage
-      branch: develop
+      branch: feature/jrb/init-package
   - provider: pypi
-    user: django-ecsmanage
-    skip_existing: true
+    user: azavea
     password:
-      secure: 0x32eNc+iKoYxM+nvMEEQJIoPHq3ehNqVUyKMT6crntYBBC8xgD2NHwsF0HCtfgm/NitWFlZLwtPhpb8dxTW//hh5gafkLt4/MALHFYBeRYm0AihCfTkjiuC/FCkpQ9K7X9dVO5qQN5gi5PQvkFW13NrKWOUCMTr2/jE8mLaRS3exCKUUamsd/S6BxgXY7LHm50ueDFDTYSkZrqKwIHnwwpMLcLvZZxcRJXZxpK567e8KTpcBelG+/ecY+Cn/+L0JJ29p6CGWCuW+vaIeYaeHAU6XZZ/cqNuycYlFTX+CpKSlajQgFQTMC1O1L6OVX73gSpZ2jUSd5dSimDmxgttsoo+kCxPA/hY9cUfXUpS1c52xVv9ZXZgweIV0g/EXcKLe1SIal8wy6fTE5DFzyZsZutE6ipksZjgrsFM26IHPflsf/caM/n3nDqoeXW5FtA8t4wpsemYWRFnYhCbWUWpiqAweKzzK/+3AJKEf55d4Zk7TokEjg5bZdBLroI0zy4MM6clxzujZNpn8FgTtlKhN9sDtHU5AvSe0+BUJRHJQVVSbc0wk5L+03dYarPlhShIWISSjoLFgDJhJPCZLgWD1OTetv0IekxU38AJnyqUi5XvUUbtOOiyNyU6xCFVp2XMQdRwMv41hYvEFbY4Su1B3AF2vSJCvK1HQehvzAMt4JE=
+      secure: I4cXP4rdPdVWZYttI7tAutWfDHMKMaJX1IH9gghfjJgc7ex0S8IFqNvEMB8ujtHoqk6FqVaC+O6zBV4g0rDMgbiOUzZa3UNmmHXofYKR8kCOQ9gD4FN2xZi0R5VOl32v/3ABlaDWFB2FP+0Ggq+j280dxhnniZnRU+0Vnuzb5/XjMYhVLV9Gds+qML8cxL5Dc5h6x+SlxeqNa6cAbquYBtlJvUSeavl7QK/uTNR8yihzuuuIhE52pCzxFbf/zuw0gQqdXw2fCXWPgfOXctl/1oc36A6JsYTWY0Ep3khUiPQFQ4oW99xu4PSpbWJ+7PqlsXL9Tenx6iGTJ2JpvTl/dZRXhgHDuqkYDLsgI/4eCz31GMOmObzs7BQF1jz7XoBGG7ektZ7M1zZPUWGk4ikUkaOYu3k/QymD7IerpRO8ihE/rolwJ0+Rblq8ZtE5KoXFmViBgJrg4Ceef/tsmxqsXt0Ani+m3e6t4lolusdUXW72I5XBh4M9aqJRGH2AXTW3qnDSLSjO1wJ3p7TqDy64h+lD/E0zdYv/HTRhEF9EAtqCcyutgmg6W2payJQ1dIUSJ0DfTbP2V8aVNCFOZWt0bCiyuycuf+UKZJrMdcgD9HMYaAqpKkyN3kIpSQfMGkGDqMDExvSupI6BgvL9f81jONorMnLGN0e6pESA+8ZO/xc=
+    distributions: sdist bdist_wheel
     on:
-      distributions: sdist bdist_wheel
+      tags: true
+      python: "3.7"
       repo: azavea/django-ecsmanage
       branch: master
