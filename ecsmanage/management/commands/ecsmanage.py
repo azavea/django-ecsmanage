@@ -53,8 +53,7 @@ class Command(BaseCommand):
             f"/clusters/{cluster_name}/tasks/{task_id}/details"
         )
 
-        self.stdout.write(self.style.SUCCESS("Task started! View here:\n"))
-        self.stdout.write(self.style.SUCCESS(url))
+        self.stdout.write(self.style.SUCCESS(f"Task started! View here:\n{url}"))
 
     def parse_config(self):
         """
