@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+if [[ -n "${ECSMANAGE_DEBUG}" ]]; then
+    set -x
+fi
+
+function usage() {
+    echo -n \
+         "Usage: $(basename "$0") [OPTIONS]
+
+Run tests for the django-ecsmanage app.
+
+Options:
+  --help     Display help text.
+  --lint     Run shell and Python linters.
+  --app      Run app tests.
+"
+}
+
+function run_linters() {
+    # Lint Bash scripts.
+    if command -v shellcheck > /dev/null; then
+        shellcheck scripts/*
+    fi
+
+    # Lint Python scripts.
+    ./.venv/bin/flake8 --exclude ./*.pyc,./.venv
+    ./.venv/bin/black --check --target-version py36
+}
+
+function run_tests() {
+    PYTHONPATH="./tests/" DJANGO_SETTINGS_MODULE="settings_test" \
+        ./.venv/bin/django-admin test --noinput
+}
+
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+    if [ "${1:-}" = "--help" ]; then
+        usage
+    elif [ "${1:-}" = "--lint" ]; then
+        run_linters
+    elif [ "${1:-}" = "--app" ]; then
+        run_tests
+    else
+        run_linters
+        run_tests
+    fi
+fi

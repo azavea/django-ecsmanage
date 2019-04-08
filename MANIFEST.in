@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+graft tests
+graft scripts
+global-exclude __pycache__
+global-exclude *.py[co]

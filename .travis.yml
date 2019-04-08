@@ -1,0 +1,36 @@
+language: python
+cache: pip
+
+env:
+  global:
+    - PYTHONPATH="./tests/"
+    - DJANGO_SETTINGS_MODULE="settings_test"
+
+matrix:
+  include:
+    - python: 3.6
+    # Workaround for Python 3.7 support. See:
+    # https://github.com/travis-ci/travis-ci/issues/9815
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+# Workaround for testing Boto3 on Travis. Taken from:
+# https://github.com/azavea/django-amazon-ses/blob/57ed8619435194742308c6f15cbf9c91b231b88a/.travis.yml#L17-L19
+before_install: sudo rm /etc/boto.cfg
+
+install: pip install .[tests]
+
+script: django-admin test --noinput
+
+deploy:
+  provider: pypi
+  user: azavea
+  password:
+    secure: I4cXP4rdPdVWZYttI7tAutWfDHMKMaJX1IH9gghfjJgc7ex0S8IFqNvEMB8ujtHoqk6FqVaC+O6zBV4g0rDMgbiOUzZa3UNmmHXofYKR8kCOQ9gD4FN2xZi0R5VOl32v/3ABlaDWFB2FP+0Ggq+j280dxhnniZnRU+0Vnuzb5/XjMYhVLV9Gds+qML8cxL5Dc5h6x+SlxeqNa6cAbquYBtlJvUSeavl7QK/uTNR8yihzuuuIhE52pCzxFbf/zuw0gQqdXw2fCXWPgfOXctl/1oc36A6JsYTWY0Ep3khUiPQFQ4oW99xu4PSpbWJ+7PqlsXL9Tenx6iGTJ2JpvTl/dZRXhgHDuqkYDLsgI/4eCz31GMOmObzs7BQF1jz7XoBGG7ektZ7M1zZPUWGk4ikUkaOYu3k/QymD7IerpRO8ihE/rolwJ0+Rblq8ZtE5KoXFmViBgJrg4Ceef/tsmxqsXt0Ani+m3e6t4lolusdUXW72I5XBh4M9aqJRGH2AXTW3qnDSLSjO1wJ3p7TqDy64h+lD/E0zdYv/HTRhEF9EAtqCcyutgmg6W2payJQ1dIUSJ0DfTbP2V8aVNCFOZWt0bCiyuycuf+UKZJrMdcgD9HMYaAqpKkyN3kIpSQfMGkGDqMDExvSupI6BgvL9f81jONorMnLGN0e6pESA+8ZO/xc=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: "3.7"
+    repo: azavea/django-ecsmanage
+    branch: master
