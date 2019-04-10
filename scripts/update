@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+if [[ -n "${ECSMANAGE_DEBUG}" ]]; then
+    set -x
+fi
+
+function usage() {
+    echo -n \
+         "Usage: $(basename "$0")
+
+Install the package for testing.
+"
+}
+
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+    if [ "${1:-}" = "--help" ]; then
+        usage
+    else
+        if ! [ -x "$(command -v python3)" ]; then
+            echo "Error: python3 is not installed."
+            exit 1
+        elif ! [ -x "$(command -v pip3)" ]; then
+            echo "Error: pip3 is not installed."
+            exit 1
+        else
+            if ! [ -d ".venv" ]; then
+                python3 -m venv ./.venv
+            fi
+
+            ./.venv/bin/pip3 install -e ".[tests]"
+        fi
+    fi
+fi
