@@ -7,9 +7,13 @@ env:
 matrix:
   include:
   - python: 3.6
+   # Workaround for Python 3.7 support. See:
+  # https://github.com/travis-ci/travis-ci/issues/9815
   - python: 3.7
     dist: xenial
     sudo: true
+# Workaround for testing Boto3 on Travis. Taken from:
+# https://github.com/azavea/django-amazon-ses/blob/57ed8619435194742308c6f15cbf9c91b231b88a/.travis.yml#L17-L19
 before_install: sudo rm /etc/boto.cfg
 install: pip install .[tests]
 script: django-admin test --noinput
