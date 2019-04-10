@@ -1,36 +1,30 @@
 language: python
 cache: pip
-
 env:
   global:
-    - PYTHONPATH="./tests/"
-    - DJANGO_SETTINGS_MODULE="settings_test"
-
+  - PYTHONPATH="./tests/"
+  - DJANGO_SETTINGS_MODULE="settings_test"
 matrix:
   include:
-    - python: 3.6
-    # Workaround for Python 3.7 support. See:
-    # https://github.com/travis-ci/travis-ci/issues/9815
-    - python: 3.7
-      dist: xenial
-      sudo: true
-
+  - python: 3.6
+  # Workaround for Python 3.7 support. See:
+  # https://github.com/travis-ci/travis-ci/issues/9815
+  - python: 3.7
+    dist: xenial
+    sudo: true
 # Workaround for testing Boto3 on Travis. Taken from:
 # https://github.com/azavea/django-amazon-ses/blob/57ed8619435194742308c6f15cbf9c91b231b88a/.travis.yml#L17-L19
 before_install: sudo rm /etc/boto.cfg
-
 install: pip install .[tests]
-
 script: django-admin test --noinput
-
 deploy:
   provider: pypi
   user: azavea
   password:
-    secure: I4cXP4rdPdVWZYttI7tAutWfDHMKMaJX1IH9gghfjJgc7ex0S8IFqNvEMB8ujtHoqk6FqVaC+O6zBV4g0rDMgbiOUzZa3UNmmHXofYKR8kCOQ9gD4FN2xZi0R5VOl32v/3ABlaDWFB2FP+0Ggq+j280dxhnniZnRU+0Vnuzb5/XjMYhVLV9Gds+qML8cxL5Dc5h6x+SlxeqNa6cAbquYBtlJvUSeavl7QK/uTNR8yihzuuuIhE52pCzxFbf/zuw0gQqdXw2fCXWPgfOXctl/1oc36A6JsYTWY0Ep3khUiPQFQ4oW99xu4PSpbWJ+7PqlsXL9Tenx6iGTJ2JpvTl/dZRXhgHDuqkYDLsgI/4eCz31GMOmObzs7BQF1jz7XoBGG7ektZ7M1zZPUWGk4ikUkaOYu3k/QymD7IerpRO8ihE/rolwJ0+Rblq8ZtE5KoXFmViBgJrg4Ceef/tsmxqsXt0Ani+m3e6t4lolusdUXW72I5XBh4M9aqJRGH2AXTW3qnDSLSjO1wJ3p7TqDy64h+lD/E0zdYv/HTRhEF9EAtqCcyutgmg6W2payJQ1dIUSJ0DfTbP2V8aVNCFOZWt0bCiyuycuf+UKZJrMdcgD9HMYaAqpKkyN3kIpSQfMGkGDqMDExvSupI6BgvL9f81jONorMnLGN0e6pESA+8ZO/xc=
-  distributions: sdist bdist_wheel
+    secure: aUHpgXoIvOP3lhLhx8E+EKRP0tbTuzLXg/hp68jtslMHywsud1/8V3x7E37wOEq1BcYBMyS5oqGqXGCO2NIYgEt8kENCilvTLau6LI9nIcV7Us57VpDNBdFw48KmV03a7lzIpayj+Sg36aWXgwxYr0lj/4XF6mn50RaeiB7L91cPtlIAS1VU58RTq3utuZ1fPiYc97C4TwYYe7T5xkZSzxUR6XWAZ4X6/xKE36Ee1l7hTQoGUsjKD5zUkqjDE0piR5yjQMhQQYTC8rkM0pnRSBaIplbra4048O81eHnt6GDdZFJSlrRIS9/sduPJ3p5B0h0SPX9VOEEtF0EaeIm6bvjrPkHuo20SfzbTRp6UXlrGlbXykP0KzJKCEh9iDvgcpv/B6i+buOtGC45PD6qu2a0wt34VvWwVnjvQju6Ui7sGYtpEDnhbJp4wLMJGvl/xfHJURuoSQ68G1JVya1toLfy3iXoL1EZBBREh+rJOJrHJaMGBSdnysCH2dt2fb/px/+8OWhcfqCn7oupysI+xb5rQo/8pbxckzAmn5Q/we5yGccX+x1Gw8bITQB01nHO9aRO/PIXipjJILP5cWj3/KUEaGpTBVfVPW4YESqgSeKYwBdxD+xgh/HalMU/0281z/AJVg0DjQT0uFhA1mDFEFE2R0h8r7ASX9YlMd3M9H+U=
   on:
-    tags: true
     python: "3.7"
+    tags: true
+    distributions: sdist bdist_wheel
     repo: azavea/django-ecsmanage
     branch: master
