@@ -160,7 +160,9 @@ class Command(BaseCommand):
         """
         overrides = {"containerOverrides": [{"name": "django", "command": cmd}]}
 
-        task_def = self.ecs_client.describe_task_definition(taskDefinition=task_def_arn)
+        task_def = self.ecs_client.describe_task_definition(
+            taskDefinition=task_def_arn
+        )["taskDefinition"]
 
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
