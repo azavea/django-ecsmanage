@@ -6,6 +6,7 @@ env:
   - DJANGO_SETTINGS_MODULE="settings_test"
 matrix:
   include:
+  - python: 2.7
   - python: 3.6
   # Workaround for Python 3.7 support. See:
   # https://github.com/travis-ci/travis-ci/issues/9815
