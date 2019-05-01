@@ -1,3 +1,5 @@
+# -*- coding: future_fstrings -*-
+
 import boto3
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
@@ -160,7 +162,9 @@ class Command(BaseCommand):
         """
         overrides = {"containerOverrides": [{"name": "django", "command": cmd}]}
 
-        task_def = self.ecs_client.describe_task_definition(taskDefinition=task_def_arn)
+        task_def = self.ecs_client.describe_task_definition(
+            taskDefinition=task_def_arn
+        )["taskDefinition"]
 
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.

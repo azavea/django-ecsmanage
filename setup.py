@@ -24,9 +24,12 @@ setup(
     url="https://github.com/azavea/django-ecsmanage/",
     author="Azavea, Inc.",
     author_email="systems@azavea.com",
-    python_requires=">=3.6",
-    install_requires=["Django>=1.11, <=2.1", "boto3>=1.9.0"],
-    extras_require={"tests": ["flake8>=3.7.7", "black"]},
+    install_requires=[
+        "Django>=1.11, <=2.1",
+        "boto3>=1.9.0",
+        'future-fstrings>=1.0.0;python_version<"3.6"',
+    ],
+    extras_require={"tests": ["flake8>=3.7.7", 'black;python_version>"3.6"']},
     setup_requires=["setuptools_scm==3.*"],
     classifiers=[
         "Environment :: Web Environment",
@@ -34,6 +37,7 @@ setup(
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Topic :: Internet :: WWW/HTTP",
