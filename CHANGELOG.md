@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added Python 2.7 support [#6](https://github.com/azavea/django-ecsmanage/pull/6)
+
 ### Fixed
 - Fixed reference to taskDefinition in describe_task_definition response [#5](https://github.com/azavea/django-ecsmanage/pull/5)
 
