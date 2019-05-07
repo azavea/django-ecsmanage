@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added test suite for matrix of Python/Django versions [#7](https://github.com/azavea/django-ecsmanage/pull/7)
 
 ## [1.0.0] - 2019-05-01
 ### Added

@@ -1,5 +1,6 @@
-include README.md
+include *.md
 include LICENSE
+graft .github
 graft tests
 graft scripts
 global-exclude __pycache__
