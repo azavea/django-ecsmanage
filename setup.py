@@ -26,7 +26,7 @@ setup(
     install_requires=[
         "Django>=1.11, <=2.1",
         "boto3>=1.9.0",
-        'future-fstrings>=1.0.0;python_version<"3.6"',
+        "future-fstrings>=1.0.0",
     ],
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     extras_require={"tests": ["flake8>=3.7.7", 'black;python_version>"3.6"']},
