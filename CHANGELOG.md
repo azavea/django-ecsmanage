@@ -5,8 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.1] - 2019-05-21
 ### Added
 - Added test suite for matrix of Python/Django versions [#7](https://github.com/azavea/django-ecsmanage/pull/7)
+
+### Fixed
+- Fixed support for `future-fstrings` in Python 3.6+ [#9](https://github.com/azavea/django-ecsmanage/pull/9)
 
 ## [1.0.0] - 2019-05-01
 ### Added
@@ -20,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update PyPi credentials [#4](https://github.com/azavea/django-ecsmanage/pull/4)
 - Initialize Django module for one-off management commands [#2](https://github.com/azavea/django-ecsmanage/pull/2)
 
-[unreleased]: https://github.com/:azavea/django-ecsmanage/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/:azavea/django-ecsmanage/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/:azavea/django-ecsmanage/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/azavea/django-ecsmanage/compare/0.1.0...v1.0.0
 [0.1.0]: https://github.com/azavea/django-ecsmanage/releases/tag/0.1.0
