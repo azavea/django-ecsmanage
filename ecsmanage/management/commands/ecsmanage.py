@@ -23,7 +23,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "cmd",
             type=str,
-            nargs="+",
+            nargs="...",
             help="Command override for the ECS container (e.g. 'migrate')",
         )
 
