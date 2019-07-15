@@ -3,6 +3,7 @@
 import boto3
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from argparse import REMAINDER
 
 
 class Command(BaseCommand):
@@ -23,7 +24,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "cmd",
             type=str,
-            nargs="+",
+            nargs=REMAINDER,
             help="Command override for the ECS container (e.g. 'migrate')",
         )
 
