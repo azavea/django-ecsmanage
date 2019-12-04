@@ -24,7 +24,7 @@ setup(
     author="Azavea, Inc.",
     author_email="systems@azavea.com",
     install_requires=[
-        "Django>=1.11,<2.3",
+        "Django>=1.11,<3.1",
         "boto3>=1.9.0",
         "future-fstrings>=1.0.0",
     ],
@@ -48,5 +48,6 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
 )
