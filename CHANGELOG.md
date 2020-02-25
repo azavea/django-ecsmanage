@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for Django 3.x and Python 3.8. No actual code changes were required [#14])(https://github.com/azavea/django-ecsmanage/pull/14)
 
+### Removed
+
+- Drop support for end of life Python 2.7 and Python 3.4
+
 ## [1.1.0] - 2019-07-15
 ### Changed
 - Use argparse.REMAINDER nargs value [#12](https://github.com/azavea/django-ecsmanage/pull/12)
