@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove support for end-of-life Python 2.7 and 3.4
 - Remove support for end-of-life Django 2.0 and 2.1
 
+### Changed
+
+- Updated `tox` and Travis configs to improve efficiencies, remove deprecated settings, and implement current best practices
+- Moved most package distribution configuration from setup.py to setup.cfg
+
+### Fixed
+
+- Fixed `flake8` config in scripts/test to ignore eggs
+- Fixed `black` formatter path in scripts/test to check all Python files
+
 ## [1.1.0] - 2019-07-15
 ### Changed
 - Use argparse.REMAINDER nargs value [#12](https://github.com/azavea/django-ecsmanage/pull/12)
