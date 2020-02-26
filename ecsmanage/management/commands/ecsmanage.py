@@ -56,7 +56,7 @@ class Command(BaseCommand):
             f"/clusters/{cluster_name}/tasks/{task_id}/details"  # NOQA
         )
 
-        self.stdout.write(self.style.SUCCESS(f"Task started! View here:\n{url}"))  # NOQA
+        self.stdout.write(self.style.SUCCESS(f"Task started! View here:\n{url}"))
 
     def parse_config(self):
         """
@@ -113,7 +113,7 @@ class Command(BaseCommand):
                 try:
                     return response[key][0]
                 except (IndexError, TypeError):
-                    msg = f"Unexpected value for '{key}' in response: " f"{response}"  # NOQA
+                    msg = f"Unexpected value for '{key}' in response: " f"{response}"
                     raise IndexError(msg)
             else:
                 return response[key]
