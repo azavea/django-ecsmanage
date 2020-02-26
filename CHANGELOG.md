@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Drop support for end of life Python 2.7 and Python 3.4
+- Remove support for end-of-life Python 2.7 and 3.4
+- Remove support for end-of-life Django 2.0 and 2.1
 
 ## [1.1.0] - 2019-07-15
 ### Changed
