@@ -28,7 +28,7 @@ function run_linters() {
     # Lint Python scripts.
     ./.venv/bin/flake8 --exclude "*.pyc,.eggs,.venv"
     if command -v ./.venv/bin/black > /dev/null; then
-        ./.venv/bin/black --check --target-version py36
+        ./.venv/bin/black --check --diff --target-version py36 .
     fi
 }
 
