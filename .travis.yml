@@ -15,6 +15,7 @@ python:
 matrix:
   include:
     - env: TOXENV=lint
+      python: 3.8
 
 install: pip install tox-travis
 script: tox
