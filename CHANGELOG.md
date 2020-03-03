@@ -10,6 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for Django 3.x and Python 3.8. No actual code changes were required [#14])(https://github.com/azavea/django-ecsmanage/pull/14)
 
+### Removed
+
+- Remove support for end-of-life Python 2.7 and 3.4 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Remove support for end-of-life Django 2.0 and 2.1 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+
+### Changed
+
+- Updated `tox` and Travis configs to improve efficiencies, remove deprecated settings, and implement current best practices [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Moved most package distribution configuration from setup.py to setup.cfg [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+
+### Fixed
+
+- Fixed `flake8` config in scripts/test to ignore eggs [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Fixed `black` formatter path in scripts/test to check all Python files [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+
 ## [1.1.0] - 2019-07-15
 ### Changed
 - Use argparse.REMAINDER nargs value [#12](https://github.com/azavea/django-ecsmanage/pull/12)

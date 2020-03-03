@@ -154,7 +154,7 @@ Developing
 ----------
 
 Local development is managed with Python virtual environments. Make sure
-that you have Python 2.7+ and pip installed before starting.
+that you have Python 3.5+ and pip installed before starting.
 
 Install the development package in a virtual environment:
 
