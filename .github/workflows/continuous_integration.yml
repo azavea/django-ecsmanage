@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: pip-${{ hashFiles('setup.cfg') }}
+          key: pip-${{ hashFiles('setup.cfg') }}-${{ hashFiles('tox.ini') }}
           restore-keys: pip-
 
       - name: Install Tox and any other packages
