@@ -30,7 +30,7 @@ jobs:
           restore-keys: pip-
 
       - name: Install Tox and any other packages
-        run: pip install tox tox-gh-actions
+        run: pip install tox-gh-actions
 
       - name: Run Tox
         run: tox
