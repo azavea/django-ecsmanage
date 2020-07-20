@@ -14,11 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove support for end-of-life Python 2.7 and 3.4 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Remove support for end-of-life Django 2.0 and 2.1 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Remove support for end-of-life Django 1.11 [#22](https://github.com/azavea/django-ecsmanage/pull/22)
 
 ### Changed
 
 - Updated `tox` and Travis configs to improve efficiencies, remove deprecated settings, and implement current best practices [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Moved most package distribution configuration from setup.py to setup.cfg [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Migrate from Travis to GitHub Actions [#22](https://github.com/azavea/django-ecsmanage/pull/22)
 
 ### Fixed
 

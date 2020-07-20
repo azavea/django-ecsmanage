@@ -1,8 +1,8 @@
 django-ecsmanage
 ================
 
-.. image:: https://travis-ci.org/azavea/django-ecsmanage.svg?branch=develop
-    :target: https://travis-ci.org/azavea/django-ecsmanage
+.. image:: https://github.com/azavea/django-ecsmanage/workflows/CI/badge.svg
+    :target: https://github.com/azavea/django-ecsmanage/actions?query=workflow%3ACI
 
 A Django app that provides a management command allowing you to run any
 other management command on an AWS Elastic Container Service (ECS)
