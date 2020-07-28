@@ -1,7 +1,7 @@
 django-ecsmanage
 ================
 
-.. image:: https://github.com/azavea/django-ecsmanage/workflows/CI/badge.svg
+.. image:: https://github.com/azavea/django-ecsmanage/workflows/CI/badge.svg?branch=develop
     :target: https://github.com/azavea/django-ecsmanage/actions?query=workflow%3ACI
 
 A Django app that provides a management command allowing you to run any
