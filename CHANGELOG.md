@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add support for Django 3.x and Python 3.8. No actual code changes were required [#14])(https://github.com/azavea/django-ecsmanage/pull/14)
+- Add support for Django 3.1 and Black source code formatting [#25](https://github.com/azavea/django-ecsmanage/pull/25)
 
 ### Removed
 
 - Remove support for end-of-life Python 2.7 and 3.4 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
+- Remove support for end-of-life Python 3.5 [#25](https://github.com/azavea/django-ecsmanage/pull/25)
 - Remove support for end-of-life Django 2.0 and 2.1 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Remove support for end-of-life Django 1.11 [#22](https://github.com/azavea/django-ecsmanage/pull/22)
 
