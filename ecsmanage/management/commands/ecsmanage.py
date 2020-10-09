@@ -78,6 +78,7 @@ class Command(BaseCommand):
 
         config = {
             "TASK_DEFINITION_NAME": "",
+            "CONTAINER_NAME": "django",
             "CLUSTER_NAME": "",
             "SECURITY_GROUP_TAGS": "",
             "SUBNET_TAGS": "",
@@ -165,8 +166,6 @@ class Command(BaseCommand):
         Run a task for a given task definition ARN using the given security
         group and subnets, and return the task ID.
         """
-        overrides = {"containerOverrides": [{"name": "django", "command": cmd}]}
-
         task_def = self.ecs_client.describe_task_definition(
             taskDefinition=task_def_arn
         )["taskDefinition"]
@@ -174,7 +173,11 @@ class Command(BaseCommand):
         kwargs = {
             "cluster": config["CLUSTER_NAME"],
             "taskDefinition": task_def_arn,
-            "overrides": overrides,
+            "overrides": {
+                "containerOverrides": [
+                    {"name": config["CONTAINER_NAME"], "command": cmd}
+                ]
+            },
             "count": 1,
             "launchType": config["LAUNCH_TYPE"],
         }

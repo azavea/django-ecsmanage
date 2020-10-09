@@ -59,6 +59,7 @@ environment. For example:
    ECSMANAGE_ENVIRONMENTS = {
        'default': {
            'TASK_DEFINITION_NAME': 'StagingAppCLI',
+           'CONTAINER_NAME': 'django',
            'CLUSTER_NAME': 'ecsStagingCluster',
            'LAUNCH_TYPE': 'FARGATE',
            'PLATFORM_VERSION': '1.4.0',
@@ -137,6 +138,8 @@ the appropriate AWS resources for your cluster:
 +==========================+==================================================================+===============+
 | ``TASK_DEFINITION_NAME`` | The name of your ECS task definition. The command                |               |
 |                          | will automatically retrieve the latest definition.               |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``CONTAINER_NAME``       | The name of the Django container in your ECS task definition.    | ``django``    |
 +--------------------------+------------------------------------------------------------------+---------------+
 | ``CLUSTER_NAME``         | The name of your ECS cluster.                                    |               |
 +--------------------------+------------------------------------------------------------------+---------------+
