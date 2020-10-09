@@ -82,6 +82,7 @@ class Command(BaseCommand):
             "SECURITY_GROUP_TAGS": "",
             "SUBNET_TAGS": "",
             "LAUNCH_TYPE": "FARGATE",
+            "PLATFORM_VERSION": "LATEST",
             "AWS_REGION": "us-east-1",
         }
 
@@ -170,34 +171,29 @@ class Command(BaseCommand):
             taskDefinition=task_def_arn
         )["taskDefinition"]
 
+        kwargs = {
+            "cluster": config["CLUSTER_NAME"],
+            "taskDefinition": task_def_arn,
+            "overrides": overrides,
+            "count": 1,
+            "launchType": config["LAUNCH_TYPE"],
+        }
+
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
         if task_def["networkMode"] == "awsvpc":
-            network_configuration = {
+            kwargs["networkConfiguration"] = {
                 "awsvpcConfiguration": {
                     "subnets": [subnet_id],
                     "securityGroups": [security_group_id],
                 }
             }
 
-            task_response = self.ecs_client.run_task(
-                cluster=config["CLUSTER_NAME"],
-                taskDefinition=task_def_arn,
-                overrides=overrides,
-                networkConfiguration=network_configuration,
-                count=1,
-                launchType=config["LAUNCH_TYPE"],
-            )
-        else:
-            task_response = self.ecs_client.run_task(
-                cluster=config["CLUSTER_NAME"],
-                taskDefinition=task_def_arn,
-                overrides=overrides,
-                count=1,
-                launchType=config["LAUNCH_TYPE"],
-            )
+        # Setting platformVersion of only relevant if launchType is FARGATE.
+        if config["LAUNCH_TYPE"] == "FARGATE":
+            kwargs["platformVersion"] = config["PLATFORM_VERSION"]
 
-        task = self.parse_response(task_response, "tasks", 0)
+        task = self.parse_response(self.ecs_client.run_task(**kwargs), "tasks", 0)
 
         # Parse the ask ARN, since ECS doesn't return the task ID.
         # Task ARNS look like: arn:aws:ecs:<region>:<aws_account_id>:task/<id>
