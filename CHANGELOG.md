@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for Django 3.x and Python 3.8. No actual code changes were required [#14](https://github.com/azavea/django-ecsmanage/pull/14)
 - Add support for Django 3.1 and Black source code formatting [#25](https://github.com/azavea/django-ecsmanage/pull/25)
+- Add support for supplying Fargate platform version [#26](https://github.com/azavea/django-ecsmanage/pull/26)
 
 ### Removed
 
