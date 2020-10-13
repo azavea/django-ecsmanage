@@ -6,35 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-10-13
 ### Added
-
-- Add support for Django 3.x and Python 3.8. No actual code changes were required [#14](https://github.com/azavea/django-ecsmanage/pull/14)
+- Add support for Django 3.x and Python 3.8; no actual code changes were required [#14](https://github.com/azavea/django-ecsmanage/pull/14)
 - Add support for Django 3.1 and Black source code formatting [#25](https://github.com/azavea/django-ecsmanage/pull/25)
 - Add support for supplying Fargate platform version [#26](https://github.com/azavea/django-ecsmanage/pull/26)
 - Add support for overriding Django container name [#27](https://github.com/azavea/django-ecsmanage/pull/27)
 
 ### Removed
-
 - Remove support for end-of-life Python 2.7 and 3.4 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Remove support for end-of-life Python 3.5 [#25](https://github.com/azavea/django-ecsmanage/pull/25)
 - Remove support for end-of-life Django 2.0 and 2.1 [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Remove support for end-of-life Django 1.11 [#22](https://github.com/azavea/django-ecsmanage/pull/22)
 
 ### Changed
-
 - Updated `tox` and Travis configs to improve efficiencies, remove deprecated settings, and implement current best practices [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Moved most package distribution configuration from setup.py to setup.cfg [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Migrate from Travis to GitHub Actions [#22](https://github.com/azavea/django-ecsmanage/pull/22)
 
 ### Fixed
-
 - Fixed `flake8` config in scripts/test to ignore eggs [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 - Fixed `black` formatter path in scripts/test to check all Python files [#16](https://github.com/azavea/django-ecsmanage/pull/16)
 
 ## [1.1.0] - 2019-07-15
 ### Changed
 - Use argparse.REMAINDER nargs value [#12](https://github.com/azavea/django-ecsmanage/pull/12)
-- Updated Django requirement from <=2.1,>=1.11 to >=1.11,<2.3 [#11](https://github.com/azavea/django-ecsmanage/pull/11)
+- Updated Django requirement from &lt;=2.1,>=1.11 to >=1.11,&lt;2.3 [#11](https://github.com/azavea/django-ecsmanage/pull/11)
 
 ## [1.0.1] - 2019-05-21
 ### Added
@@ -55,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update PyPi credentials [#4](https://github.com/azavea/django-ecsmanage/pull/4)
 - Initialize Django module for one-off management commands [#2](https://github.com/azavea/django-ecsmanage/pull/2)
 
-[unreleased]: https://github.com/:azavea/django-ecsmanage/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/azavea/django-ecsmanage/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/azavea/django-ecsmanage/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/:azavea/django-ecsmanage/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/:azavea/django-ecsmanage/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/azavea/django-ecsmanage/compare/0.1.0...1.0.0
