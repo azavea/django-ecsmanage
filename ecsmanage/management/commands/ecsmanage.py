@@ -1,5 +1,3 @@
-# -*- coding: future_fstrings -*-
-
 import boto3
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
@@ -56,7 +54,9 @@ class Command(BaseCommand):
             f"/clusters/{cluster_name}/tasks/{task_id}/details"  # NOQA
         )
 
-        self.stdout.write(self.style.SUCCESS(f"Task started! View here:\n{url}"))  # NOQA
+        self.stdout.write(
+            self.style.SUCCESS(f"Task started! View here:\n{url}")
+        )  # NOQA
 
     def parse_config(self):
         """
@@ -78,10 +78,12 @@ class Command(BaseCommand):
 
         config = {
             "TASK_DEFINITION_NAME": "",
+            "CONTAINER_NAME": "django",
             "CLUSTER_NAME": "",
             "SECURITY_GROUP_TAGS": "",
             "SUBNET_TAGS": "",
             "LAUNCH_TYPE": "FARGATE",
+            "PLATFORM_VERSION": "LATEST",
             "AWS_REGION": "us-east-1",
         }
 
@@ -113,7 +115,10 @@ class Command(BaseCommand):
                 try:
                     return response[key][0]
                 except (IndexError, TypeError):
-                    msg = f"Unexpected value for '{key}' in response: " f"{response}"  # NOQA
+                    msg = (
+                        f"Unexpected value for '{key}' in response: "  # NOQA
+                        f"{response}"  # NOQA
+                    )
                     raise IndexError(msg)
             else:
                 return response[key]
@@ -161,40 +166,37 @@ class Command(BaseCommand):
         Run a task for a given task definition ARN using the given security
         group and subnets, and return the task ID.
         """
-        overrides = {"containerOverrides": [{"name": "django", "command": cmd}]}
-
         task_def = self.ecs_client.describe_task_definition(
             taskDefinition=task_def_arn
         )["taskDefinition"]
 
+        kwargs = {
+            "cluster": config["CLUSTER_NAME"],
+            "taskDefinition": task_def_arn,
+            "overrides": {
+                "containerOverrides": [
+                    {"name": config["CONTAINER_NAME"], "command": cmd}
+                ]
+            },
+            "count": 1,
+            "launchType": config["LAUNCH_TYPE"],
+        }
+
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
         if task_def["networkMode"] == "awsvpc":
-            network_configuration = {
+            kwargs["networkConfiguration"] = {
                 "awsvpcConfiguration": {
                     "subnets": [subnet_id],
                     "securityGroups": [security_group_id],
                 }
             }
 
-            task_response = self.ecs_client.run_task(
-                cluster=config["CLUSTER_NAME"],
-                taskDefinition=task_def_arn,
-                overrides=overrides,
-                networkConfiguration=network_configuration,
-                count=1,
-                launchType=config["LAUNCH_TYPE"],
-            )
-        else:
-            task_response = self.ecs_client.run_task(
-                cluster=config["CLUSTER_NAME"],
-                taskDefinition=task_def_arn,
-                overrides=overrides,
-                count=1,
-                launchType=config["LAUNCH_TYPE"],
-            )
+        # Setting platformVersion of only relevant if launchType is FARGATE.
+        if config["LAUNCH_TYPE"] == "FARGATE":
+            kwargs["platformVersion"] = config["PLATFORM_VERSION"]
 
-        task = self.parse_response(task_response, "tasks", 0)
+        task = self.parse_response(self.ecs_client.run_task(**kwargs), "tasks", 0)
 
         # Parse the ask ARN, since ECS doesn't return the task ID.
         # Task ARNS look like: arn:aws:ecs:<region>:<aws_account_id>:task/<id>

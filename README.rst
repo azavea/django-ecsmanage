@@ -1,8 +1,8 @@
 django-ecsmanage
 ================
 
-.. image:: https://travis-ci.org/azavea/django-ecsmanage.svg?branch=develop
-    :target: https://travis-ci.org/azavea/django-ecsmanage
+.. image:: https://github.com/azavea/django-ecsmanage/workflows/CI/badge.svg?branch=develop
+    :target: https://github.com/azavea/django-ecsmanage/actions?query=workflow%3ACI
 
 A Django app that provides a management command allowing you to run any
 other management command on an AWS Elastic Container Service (ECS)
@@ -59,8 +59,10 @@ environment. For example:
    ECSMANAGE_ENVIRONMENTS = {
        'default': {
            'TASK_DEFINITION_NAME': 'StagingAppCLI',
+           'CONTAINER_NAME': 'django',
            'CLUSTER_NAME': 'ecsStagingCluster',
            'LAUNCH_TYPE': 'FARGATE',
+           'PLATFORM_VERSION': '1.4.0',
            'SECURITY_GROUP_TAGS': {
                'Name': 'sgAppEcsService',
                'Environment': 'Staging',
@@ -128,33 +130,37 @@ AWS Resources
 The following environment configuration keys help the management command locate
 the appropriate AWS resources for your cluster:
 
-+--------------------------+-----------------------------------------------------+---------------+
-| Key                      | Description                                         | Default       |
-|                          |                                                     |               |
-|                          |                                                     |               |
-|                          |                                                     |               |
-+==========================+=====================================================+===============+
-| ``TASK_DEFINITION_NAME`` | The name of your ECS task definition. The command   |               |
-|                          | will automatically retrieve the latest definition.  |               |
-+--------------------------+-----------------------------------------------------+---------------+
-| ``CLUSTER_NAME``         | The name of your ECS cluster.                       |               |
-+--------------------------+-----------------------------------------------------+---------------+
-| ``SECURITY_GROUP_TAGS``  | A dictionary of tags to use to identify a security  |               |
-|                          | group for your task.                                |               |
-+--------------------------+-----------------------------------------------------+---------------+
-| ``SUBNET_TAGS``          | A dictionary of tags to use to identify a subnet    |               |
-|                          | for your task.                                      |               |
-+--------------------------+-----------------------------------------------------+---------------+
-| ``LAUNCH_TYPE``          | The ECS launch type for your task.                  | ``FARGATE``   |
-+--------------------------+-----------------------------------------------------+---------------+
-| ``AWS_REGION``           | The AWS region to run your task.                    | ``us-east-1`` |
-+--------------------------+-----------------------------------------------------+---------------+
++--------------------------+------------------------------------------------------------------+---------------+
+|           Key            |                           Description                            |    Default    |
+|                          |                                                                  |               |
+|                          |                                                                  |               |
+|                          |                                                                  |               |
++==========================+==================================================================+===============+
+| ``TASK_DEFINITION_NAME`` | The name of your ECS task definition. The command                |               |
+|                          | will automatically retrieve the latest definition.               |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``CONTAINER_NAME``       | The name of the Django container in your ECS task definition.    | ``django``    |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``CLUSTER_NAME``         | The name of your ECS cluster.                                    |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``SECURITY_GROUP_TAGS``  | A dictionary of tags to use to identify a security               |               |
+|                          | group for your task.                                             |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``SUBNET_TAGS``          | A dictionary of tags to use to identify a subnet                 |               |
+|                          | for your task.                                                   |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``LAUNCH_TYPE``          | The ECS launch type for your task.                               | ``FARGATE``   |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``PLATFORM_VERSION``     | The Fargate platform version, if ``LAUNCH_TYPE`` is ``FARGATE``. | ``LATEST``    |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``AWS_REGION``           | The AWS region to run your task.                                 | ``us-east-1`` |
++--------------------------+------------------------------------------------------------------+---------------+
 
 Developing
 ----------
 
 Local development is managed with Python virtual environments. Make sure
-that you have Python 2.7+ and pip installed before starting.
+that you have Python 3.6+ and pip installed before starting.
 
 Install the development package in a virtual environment:
 
