@@ -82,6 +82,7 @@ class Command(BaseCommand):
             "CLUSTER_NAME": "",
             "SECURITY_GROUP_TAGS": "",
             "SUBNET_TAGS": "",
+            "ASSIGN_PUBLIC_IP": "DISABLED",
             "LAUNCH_TYPE": "FARGATE",
             "PLATFORM_VERSION": "LATEST",
             "AWS_REGION": "us-east-1",
@@ -189,6 +190,7 @@ class Command(BaseCommand):
                 "awsvpcConfiguration": {
                     "subnets": [subnet_id],
                     "securityGroups": [security_group_id],
+                    "assignPublicIp": config["ASSIGN_PUBLIC_IP"],
                 }
             }
 
