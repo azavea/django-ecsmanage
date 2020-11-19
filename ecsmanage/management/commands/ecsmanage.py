@@ -200,7 +200,11 @@ class Command(BaseCommand):
 
         task = self.parse_response(self.ecs_client.run_task(**kwargs), "tasks", 0)
 
-        # Parse the ask ARN, since ECS doesn't return the task ID.
-        # Task ARNS look like: arn:aws:ecs:<region>:<aws_account_id>:task/<id>
-        task_id = task["taskArn"].split("/")[1]
+        # Task ARNs have at least two formats:
+        #
+        #  - Old: arn:aws:ecs:region:aws_account_id:task/task-id
+        #  - New: arn:aws:ecs:region:aws_account_id:task/cluster-name/task-id
+        #
+        # See: https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs-account-settings.html#ecs-resource-ids  # NOQA
+        task_id = task["taskArn"].split("/")[-1]
         return task_id
