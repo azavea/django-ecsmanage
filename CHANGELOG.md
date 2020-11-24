@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2020-11-24
+### Added
+- Add ASSIGN_PUBLIC_IP configuration option [#28](https://github.com/azavea/django-ecsmanage/pull/28)
+
+### Fixed
+- Fix parsing of ECS task ID from task ARN [#30](https://github.com/azavea/django-ecsmanage/pull/30)
+
 ## [2.0.0] - 2020-10-13
 ### Added
 - Add support for Django 3.x and Python 3.8; no actual code changes were required [#14](https://github.com/azavea/django-ecsmanage/pull/14)
@@ -52,7 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update PyPi credentials [#4](https://github.com/azavea/django-ecsmanage/pull/4)
 - Initialize Django module for one-off management commands [#2](https://github.com/azavea/django-ecsmanage/pull/2)
 
-[Unreleased]: https://github.com/azavea/django-ecsmanage/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/azavea/django-ecsmanage/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/azavea/django-ecsmanage/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/azavea/django-ecsmanage/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/:azavea/django-ecsmanage/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/:azavea/django-ecsmanage/compare/1.0.0...1.0.1

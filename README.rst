@@ -73,6 +73,7 @@ environment. For example:
                'Environment': 'Staging',
                'Project': 'ProjectName'
            },
+           'ASSIGN_PUBLIC_IP': 'DISABLED',
            'AWS_REGION': 'us-east-1',
        },
    }
@@ -148,6 +149,9 @@ the appropriate AWS resources for your cluster:
 +--------------------------+------------------------------------------------------------------+---------------+
 | ``SUBNET_TAGS``          | A dictionary of tags to use to identify a subnet                 |               |
 |                          | for your task.                                                   |               |
++--------------------------+------------------------------------------------------------------+---------------+
+| ``ASSIGN_PUBLIC_IP``     | Whether to automatically assign a public IP address to your      | ``DISABLED``  |
+|                          | task. Can be ``ENABLED`` or ``DISABLED``.                        |               |
 +--------------------------+------------------------------------------------------------------+---------------+
 | ``LAUNCH_TYPE``          | The ECS launch type for your task.                               | ``FARGATE``   |
 +--------------------------+------------------------------------------------------------------+---------------+
