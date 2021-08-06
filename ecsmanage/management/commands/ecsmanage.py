@@ -185,7 +185,7 @@ class Command(BaseCommand):
 
         # Only the awsvpc network mode supports the networkConfiguration
         # input value.
-        if task_def["networkMode"] == "awsvpc":
+        if "networkMode" in task_def and task_def["networkMode"] == "awsvpc":
             kwargs["networkConfiguration"] = {
                 "awsvpcConfiguration": {
                     "subnets": [subnet_id],
