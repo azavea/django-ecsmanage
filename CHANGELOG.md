@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2023-12-18
 ### Added
 - Add support for Django 3.2, 4.2, 5.0 [#33](https://github.com/azavea/django-ecsmanage/pull/33)
 
@@ -69,7 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update PyPi credentials [#4](https://github.com/azavea/django-ecsmanage/pull/4)
 - Initialize Django module for one-off management commands [#2](https://github.com/azavea/django-ecsmanage/pull/2)
 
-[Unreleased]: https://github.com/azavea/django-ecsmanage/compare/2.0.1...HEAD
+[Unreleased]: https://github.com/azavea/django-ecsmanage/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/azavea/django-ecsmanage/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/azavea/django-ecsmanage/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/azavea/django-ecsmanage/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/:azavea/django-ecsmanage/compare/1.0.1...1.1.0
