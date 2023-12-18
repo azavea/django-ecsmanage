@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add support for Django 3.2, 4.2, 5.0 [#33](https://github.com/azavea/django-ecsmanage/pull/33)
+
 ### Removed
 - Remove support for end-of-life Python 3.6 and 3.7, Django 2.2, 3.0, and 3.1 [#33](https://github.com/azavea/django-ecsmanage/pull/33)
 
