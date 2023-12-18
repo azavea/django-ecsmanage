@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Django 3.2, 4.2, 5.0 [#33](https://github.com/azavea/django-ecsmanage/pull/33)
 
 ### Changed
+- Support default network modes [#33](https://github.com/azavea/django-ecsmanage/pull/33)
 - Upgrade CI to use newer GitHub Actions for `checkout` and `setup-python` [#33](https://github.com/azavea/django-ecsmanage/pull/33)
 
 ### Removed
