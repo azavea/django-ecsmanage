@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- Remove support for end-of-life Python 3.6 and 3.7, Django 2.2, 3.0, and 3.1 [#33](https://github.com/azavea/django-ecsmanage/pull/33)
+
 ## [2.0.1] - 2020-11-24
 ### Added
 - Add ASSIGN_PUBLIC_IP configuration option [#28](https://github.com/azavea/django-ecsmanage/pull/28)
