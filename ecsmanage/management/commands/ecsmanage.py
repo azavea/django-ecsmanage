@@ -29,7 +29,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """
         Run the given command on the latest app CLI task definition and print
-        out a URL to view the status.
+        out a URL to view the status. Returns the task ARN of the started task.
         """
         self.env = options["env"]
         cmd = options["cmd"]
@@ -45,7 +45,15 @@ class Command(BaseCommand):
         security_group_id = self.get_security_group(config["SECURITY_GROUP_TAGS"])
         subnet_id = self.get_subnet(config["SUBNET_TAGS"])
 
-        task_id = self.run_task(config, task_def_arn, security_group_id, subnet_id, cmd)
+        task_arn = self.run_task(config, task_def_arn, security_group_id, subnet_id, cmd)
+
+        # Task ARNs have at least two formats:
+        #
+        #  - Old: arn:aws:ecs:region:aws_account_id:task/task-id
+        #  - New: arn:aws:ecs:region:aws_account_id:task/cluster-name/task-id
+        #
+        # See: https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs-account-settings.html#ecs-resource-ids  # NOQA
+        task_id = task_arn.split("/")[-1]
 
         cluster_name = config["CLUSTER_NAME"]
 
@@ -57,6 +65,8 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(f"Task started! View here:\n{url}")
         )  # NOQA
+
+        return task_arn
 
     def parse_config(self):
         """
@@ -165,7 +175,7 @@ class Command(BaseCommand):
     def run_task(self, config, task_def_arn, security_group_id, subnet_id, cmd):
         """
         Run a task for a given task definition ARN using the given security
-        group and subnets, and return the task ID.
+        group and subnets, and return the task ARN of the started task.
         """
         task_def = self.ecs_client.describe_task_definition(
             taskDefinition=task_def_arn
@@ -200,11 +210,4 @@ class Command(BaseCommand):
 
         task = self.parse_response(self.ecs_client.run_task(**kwargs), "tasks", 0)
 
-        # Task ARNs have at least two formats:
-        #
-        #  - Old: arn:aws:ecs:region:aws_account_id:task/task-id
-        #  - New: arn:aws:ecs:region:aws_account_id:task/cluster-name/task-id
-        #
-        # See: https://docs.aws.amazon.com/AmazonECS/latest/userguide/ecs-account-settings.html#ecs-resource-ids  # NOQA
-        task_id = task["taskArn"].split("/")[-1]
-        return task_id
+        return task["taskArn"]
